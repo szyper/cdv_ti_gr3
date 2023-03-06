@@ -4,7 +4,7 @@ vim ->
 
 git config --global user.email "email@gmail.com"
 git config --global user.name "username"
-git commit
+git commit / git commit -m "add new files"
 vim -> i/insert, <esc>, :wq
 git status
 git push / git push origin main
