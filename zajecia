@@ -1,1 +1,15 @@
-cdv
+https://gitforwindows.org/
+git commit
+vim ->
+
+git config --global user.email "email@gmail.com"
+git config --global user.name "username"
+git commit
+vim -> i/insert, <esc>, :wq
+git status
+git push / git push origin main
+
+Loaded Configuration File	C:\xampp\php\php.ini
+upload_max_filesize	40M	40M
+DOCUMENT_ROOT	C:/xampp/htdocs
+
