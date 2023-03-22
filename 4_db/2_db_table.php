@@ -15,11 +15,13 @@
     <th>Imię</th>
     <th>Nazwisko</th>
     <th>Data urodzenia</th>
+    <th>Miasto</th>
+    <th>Województwo</th>
   </tr>
 
 <?php
   require_once "./scripts/connect.php";
-  $sql = "SELECT * FROM `users`";
+  $sql = "SELECT * FROM `users` JOIN `cities` ON `users`.`city_id`=`cities`.`id` JOIN `states` ON `cities`.`state_id`=`states`.`id`;";
   $result = $conn->query($sql);
   while($user = $result->fetch_assoc()){
     echo <<< TABLEUSERS
@@ -27,6 +29,8 @@
         <td>$user[firstName]</td>
         <td>$user[lastName]</td>
         <td>$user[birthday]</td>
+        <td>$user[city]</td>
+        <td>$user[state]</td>
       </tr>
       
 TABLEUSERS;
