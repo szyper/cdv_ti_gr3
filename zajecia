@@ -13,3 +13,6 @@ Loaded Configuration File	C:\xampp\php\php.ini
 upload_max_filesize	40M	40M
 DOCUMENT_ROOT	C:/xampp/htdocs
 
+git checkout -b "delete_user"
+
+
