@@ -54,6 +54,6 @@ TABLEUSERS;
   echo "</table><hr>";
   $conn->close();
 ?>
-  <a href="">Dodaj użytkownika</a>
+  <a href="./4_db_table_delete_add.php">Dodaj użytkownika</a>
 </body>
 </html>
