@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!doctype html>
 <html lang="pl">
 <head>
@@ -25,6 +28,15 @@ if (isset($_GET["addUser"])){
   }else{
     echo "<h4>Dodano nowego użytkownika</h4>";
   }
+}
+
+if (isset($_GET["updateUser"])){
+	if ($_GET["updateUser"] == 0){
+		echo "<h4>Nie udało się zaktualizować użytkownika!</h4>";
+	}else{
+		echo "<h4>Zaktualizowano użytkownika</h4>";
+	}
+  unset($_SESSION["userUpdateId"]);
 }
 ?>
 
@@ -90,30 +102,36 @@ ADDUSERFORM;
 
 	//formularz aktualizacji użytkownika
 	if (isset($_GET["userUpdateId"])){
+    $_SESSION["userUpdateId"] = $_GET["userUpdateId"];
 		echo "<h4>Aktualizacja użytkownika</h4>";
     $sql = "SELECT * FROM users WHERE users.`id`='$_GET[userUpdateId]'";
     $result = $conn->query($sql);
     $updateUser = $result->fetch_assoc();
     //echo $updateUser["firstName"];
-		echo <<< ADDUSERFORM
-      <form action="./scripts/addUser.php" method="POST">
+		echo <<< UPDATEUSERFORM
+      <form action="./scripts/updateUser.php" method="POST">
         <input type="text" name="firstName" value="$updateUser[firstName]"><br><br>
         <input type="text" name="lastName" value="$updateUser[lastName]"><br><br>
         <input type="date" name="birthday" value="$updateUser[birthday]"> Data urodzenia <br><br>
         <select name="city_id">
 <!--        <input type="number" name="city_id" placeholder="Podaj id miasta"><br><br>-->
-ADDUSERFORM;
+UPDATEUSERFORM;
 		//miasto
 		$sql = "SELECT id, city FROM cities;";
 		$result = $conn->query($sql);
-		while ($city = $result->fetch_assoc()){
-			echo "<option value='$city[id]'>$city[city]</option>";
+		while ($city = $result->fetch_assoc())
+    {
+	    if ($city["id"] == $updateUser["city_id"]){
+        echo "<option value='$city[id]' selected>$city[city]</option>";
+      }else{
+		    echo "<option value='$city[id]'>$city[city]</option>";
+      }
 		}
-		echo <<< ADDUSERFORM
+		echo <<< UPDATEUSERFORM
         </select><br><br>
         <input type="submit" value="Aktualizuj użytkownika">
       </form>
-ADDUSERFORM;
+UPDATEUSERFORM;
 	}
 
 
