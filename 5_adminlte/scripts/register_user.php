@@ -57,15 +57,24 @@ function sanitizeInput($input){
 			//echo $firstName."<br>";
 		}
 		//echo $firstName;
-
 		require_once "./connect.php";
-		$stmt = $conn->prepare("INSERT INTO `users` (`city_id`, `email`, `additional_email`, `firstName`, `lastName`, `birthday`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-		$stmt->bind_param("issssss", $city_id, $email, $additional_email, $firstName, $lastName, $birthday, $pass);
+		try{
+			$stmt = $conn->prepare("INSERT INTO `users` (`city_id`, `email`, `additional_email`, `firstName`, `lastName`, `birthday`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-		$stmt->execute();
+			$pass = password_hash($pass, PASSWORD_ARGON2ID);
+			$stmt->bind_param("issssss", $city_id, $email, $additional_email, $firstName, $lastName, $birthday, $pass);
+			if ($stmt->execute()){
+				$_SESSION["success"] = "Prawidłowo dodano użytkownika $firstName $lastName";
+				header("location: ../pages/view");
+				exit();
+			}
 
-
+		} catch(mysqli_sql_exception $e){
+			$_SESSION["error_message"] = "Error: ".$e->getMessage();
+			echo "<script>history.back();</script>";
+			exit();
+		}
 
 	}else{
 		header("location: ../pages/view/register.php");
