@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 				//echo session_id();
 				$_SESSION["logged"]["session_id"] = session_id();
 				//$_SESSION["logged"]["role_id"] = $user["role_id"];
-
+				echo "ok"
 			}else{
 				$_SESSION["error_message"] = "Błędny login lub hasło!";
 				echo "<script>history.back();</script>";
